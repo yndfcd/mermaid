@@ -19,19 +19,7 @@ load_dotenv(dotenv_path=".env.local")
 logger = logging.getLogger("my-worker")
 logger.setLevel(logging.INFO)
 
-instructions = (
-            "You are a restaurant order assistant powered by a large language model. You will:"
-            "1. Respond only to menu-related requests, reservations, and order modifications."
-            "2. If the customer provides irrelevant or unrelated input, you will politely redirect them to valid options."
-            "3. Keep track of all ordered items and modifications. Context must always be maintained throughout the conversation."
-            "4. You must use function calls to retrieve menu and availability data from the backend."
-            "5. When summarizing the order, any items outside the menu must be excluded automatically."
-            "6. For example:"
-                "- If the customer orders something that is not on the menu, respond with: \"That item is not available.\""
-                "- If the customer modifies an order, such as changing a side dish, make the appropriate adjustment."
-            "7. If an item is unavailable, let the customer know and suggest an alternative from the menu."
-        )
-
+instructions = open("prompt.txt", "r").read()
 
 async def entrypoint(ctx: JobContext):
     logger.info(f"connecting to room {ctx.room.name}")
